@@ -19,7 +19,7 @@ To use with Claude Desktop:
      "mcpServers": {
        "stellar-mcp": {
          "command": "npx",
-         "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/stellar-mcp-xdr-json/raw/refs/heads/main/stellar-mcp-xdr-json.ts"]
+         "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/mcp-stellar-xdr-json/raw/refs/heads/main/mcp-stellar-xdr-json.ts"]
        }
      }
    }
@@ -37,7 +37,7 @@ To use with Claude Desktop:
      --scope user \
      stellar-mcp-xdr-json \
      -- \
-     npx deno run --allow-read https://github.com/leighmcculloch/stellar-mcp-xdr-json/raw/refs/heads/main/stellar-mcp-xdr-json.ts
+     npx deno run --allow-read https://github.com/leighmcculloch/mcp-stellar-xdr-json/raw/refs/heads/main/mcp-stellar-xdr-json.ts
    ```
 
 2. Reopen Claude Code.
