@@ -1,7 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read
 
 import { Server } from "npm:@modelcontextprotocol/sdk@1.8.0/server/index.js";
-//import { SSEServerTransport } from "npm:@modelcontextprotocol/sdk@1.8.0/server/sse.js";
 import { StdioServerTransport } from "npm:@modelcontextprotocol/sdk@1.8.0/server/stdio.js";
 import {
   CallToolRequestSchema,
@@ -134,11 +133,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 async function main() {
   const transport = new StdioServerTransport();
-  //const transport = new SSEServerTransport("/sse", res);
   await server.connect(transport);
 }
 
 main().catch((error) => {
   console.error("Server error:", error);
-  process.exit(1);
+  Deno.exit(1);
 });
