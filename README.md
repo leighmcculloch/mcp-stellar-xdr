@@ -17,7 +17,7 @@ To use with Claude Desktop:
    ```json
    {
      "mcpServers": {
-       "stellar-mcp": {
+       "mcp-stellar-xdr-json": {
          "command": "npx",
          "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/mcp-stellar-xdr-json/raw/refs/heads/main/mcp-stellar-xdr-json.ts"]
        }
@@ -35,7 +35,7 @@ To use with Claude Desktop:
    claude mcp add \
      --transport stdio \
      --scope user \
-     stellar-mcp-xdr-json \
+     mcp-stellar-xdr-json \
      -- \
      npx deno run --allow-read https://github.com/leighmcculloch/mcp-stellar-xdr-json/raw/refs/heads/main/mcp-stellar-xdr-json.ts
    ```
