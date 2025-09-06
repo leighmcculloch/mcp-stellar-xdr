@@ -1,8 +1,21 @@
-# Stellar MCP Server for XDR-JSON
+# Stellar MCP Server for XDR
 
-A [Claude Model Context Protocol (MCP)] server that exposes Stellar XDR-JSON conversion tools, that Claude can use to understand what XDR means. 
+A [Claude Model Context Protocol (MCP)] server that decodes Stellar XDR into XDR-JSON, that agents can use to understand what XDR means. 
 
 [Claude Model Context Protocol (MCP)]: https://www.claudemcp.com/
+
+## Usage (General)
+
+To use with agents, setup a `stdio` MCP configuration with your agent calling the following command:
+
+```
+{
+  "command": "npx",
+  "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/mcp-stellar-xdr/raw/refs/heads/main/mcp-stellar-xdr.ts"]
+}
+```
+
+If you have `deno` installed you can omit the `npx` command and call `deno` directly.
 
 ## Usage (Claude Desktop)
 
@@ -19,7 +32,7 @@ To use with Claude Desktop:
      "mcpServers": {
        "mcp-stellar-xdr-json": {
          "command": "npx",
-         "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/mcp-stellar-xdr-json/raw/refs/heads/main/mcp-stellar-xdr-json.ts"]
+         "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/mcp-stellar-xdr/raw/refs/heads/main/mcp-stellar-xdr.ts"]
        }
      }
    }
@@ -35,9 +48,9 @@ To use with Claude Desktop:
    claude mcp add \
      --transport stdio \
      --scope user \
-     mcp-stellar-xdr-json \
+     mcp-stellar-xdr \
      -- \
-     npx deno run --allow-read https://github.com/leighmcculloch/mcp-stellar-xdr-json/raw/refs/heads/main/mcp-stellar-xdr-json.ts
+     npx deno run --allow-read https://github.com/leighmcculloch/mcp-stellar-xdr/raw/refs/heads/main/mcp-stellar-xdr.ts
    ```
 
 2. Reopen Claude Code.

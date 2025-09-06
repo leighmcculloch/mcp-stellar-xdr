@@ -12,7 +12,7 @@ await init();
 
 const server = new Server(
   {
-    name: "mcp-stellar-xdr-json",
+    name: "mcp-stellar-xdr",
     version: "0.1.0",
   },
   {
