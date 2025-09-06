@@ -7,7 +7,7 @@ import {
   ListToolsRequestSchema,
 } from "npm:@modelcontextprotocol/sdk@1.8.0/types.js";
 
-import init, { decode, guess } from "npm:@stellar/stellar-xdr-json@22.0.0-rc.1.1";
+import init, { decode, guess } from "npm:@stellar/stellar-xdr-json@23.0.0";
 await init();
 
 const server = new Server(
