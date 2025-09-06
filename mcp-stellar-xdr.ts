@@ -56,20 +56,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           },
           required: ["type", "xdr"]
         }
-      },
-      {
-        name: "xdr_decode_transaction",
-        description: "Decode a Stellar transaction from XDR to JSON",
-        inputSchema: {
-          type: "object",
-          properties: {
-            xdr: {
-              type: "string",
-              description: "Base64-encoded XDR of the transaction"
-            },
-          },
-          required: ["xdr"]
-        }
       }
     ]
   };
@@ -101,22 +87,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       const json = decode(type, xdr);
-
-      return {
-        content: [{
-          type: "text",
-          text: `${json}`
-        }]
-      };
-    }
-
-    case "xdr_decode_transaction": {
-      const xdr = String(request.params.arguments?.xdr);
-      if (!xdr) {
-        throw new Error("XDR is required");
-      }
-
-      const json = decode("TransactionEnvelope", xdr);
 
       return {
         content: [{
