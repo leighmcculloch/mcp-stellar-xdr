@@ -32,11 +32,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
       {
-        name: "xdr_types",
+        name: "types",
         description: "Get the supported XDR types.",
       },
       {
-        name: "xdr_json_schema",
+        name: "json_schema",
         description: "Get the JSON schema for an XDR type.",
         inputSchema: {
           type: "object",
@@ -50,7 +50,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "xdr_guess",
+        name: "guess",
         description:
           "Guess what type Stellar XDR is, getting back a list of possible types.",
         inputSchema: {
@@ -65,7 +65,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "xdr_decode",
+        name: "decode",
         description: "Decode a Stellar XDR to JSON",
         inputSchema: {
           type: "object",
@@ -83,7 +83,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "xdr_encode",
+        name: "encode",
         description: "Encode a Stellar XDR from JSON",
         inputSchema: {
           type: "object",
@@ -107,13 +107,13 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   switch (request.params.name) {
-    case "xdr_types": {
+    case "types": {
       const list = types();
 
       return { content: [{ type: "text", text: `${list.join(", ")}` }] };
     }
 
-    case "xdr_json_schema": {
+    case "json_schema": {
       const type = String(request.params.arguments?.type);
       if (!type) {
         throw new Error("Type is required");
@@ -124,7 +124,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text", text: `${json_schema}` }] };
     }
 
-    case "xdr_guess": {
+    case "guess": {
       const xdr = String(request.params.arguments?.xdr);
       if (!xdr) {
         throw new Error("XDR is required");
@@ -135,7 +135,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text", text: `${list.join(", ")}` }] };
     }
 
-    case "xdr_decode": {
+    case "decode": {
       const type = String(request.params.arguments?.type);
       const xdr = String(request.params.arguments?.xdr);
       if (!type || !xdr) {
@@ -147,7 +147,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text", text: `${json}` }] };
     }
 
-    case "xdr_encode": {
+    case "encode": {
       const type = String(request.params.arguments?.type);
       const json = String(request.params.arguments?.json);
       if (!type || !json) {
