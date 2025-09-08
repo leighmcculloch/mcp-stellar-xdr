@@ -1,12 +1,14 @@
 # Stellar MCP Server for XDR
 
-A [Claude Model Context Protocol (MCP)] server that decodes Stellar XDR into XDR-JSON, that agents can use to understand what XDR means. 
+A [Claude Model Context Protocol (MCP)] server that decodes Stellar XDR into
+XDR-JSON, that agents can use to understand what XDR means.
 
 [Claude Model Context Protocol (MCP)]: https://www.claudemcp.com/
 
 ## Usage (General)
 
-To use with agents, setup a `stdio` MCP configuration with your agent calling the following command:
+To use with agents, setup a `stdio` MCP configuration with your agent calling
+the following command:
 
 ```
 {
@@ -15,7 +17,8 @@ To use with agents, setup a `stdio` MCP configuration with your agent calling th
 }
 ```
 
-If you have `deno` installed you can omit the `npx` command and call `deno` directly.
+If you have `deno` installed you can omit the `npx` command and call `deno`
+directly.
 
 ## Usage (Claude Desktop)
 
