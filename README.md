@@ -35,13 +35,18 @@ To use with Claude Desktop:
      "mcpServers": {
        "mcp-stellar-xdr-json": {
          "command": "npx",
-         "args": ["deno", "run", "--allow-read", "https://github.com/leighmcculloch/mcp-stellar-xdr/raw/refs/heads/main/mcp-stellar-xdr.ts"]
+         "args": [
+           "deno",
+           "run",
+           "--allow-read",
+           "https://github.com/leighmcculloch/mcp-stellar-xdr/raw/refs/heads/main/mcp-stellar-xdr.ts"
+         ]
        }
      }
    }
    ```
 
-2. Reopen Claude Desktop. 
+2. Reopen Claude Desktop.
 
 ## Usage (Claude Code)
 
@@ -67,4 +72,3 @@ https://github.com/user-attachments/assets/8c4eef81-9109-432d-8be6-8e24ead74eef
 ### Understanding a Contract Event
 
 https://github.com/user-attachments/assets/91523c7e-652e-46f8-92af-2315f408e32d
-
