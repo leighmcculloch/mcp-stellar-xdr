@@ -7,7 +7,11 @@ import {
   ListToolsRequestSchema,
 } from "npm:@modelcontextprotocol/sdk@1.8.0/types.js";
 
-import init, { decode, guess } from "npm:@stellar/stellar-xdr-json@23.0.0";
+import init, {
+  decode,
+  guess,
+  schema,
+} from "npm:@stellar/stellar-xdr-json@23.0.0";
 await init();
 
 const server = new Server(
@@ -19,7 +23,7 @@ const server = new Server(
     capabilities: {
       tools: {},
     },
-  }
+  },
 );
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -27,17 +31,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "xdr_guess",
-        description: "Guess what type Stellar XDR is, getting back a list of possible types.",
+        description:
+          "Guess what type Stellar XDR is, getting back a list of possible types.",
         inputSchema: {
           type: "object",
           properties: {
             xdr: {
               type: "string",
-              description: "Base64-encoded XDR"
+              description: "Base64-encoded XDR",
             },
           },
-          required: ["xdr"]
-        }
+          required: ["xdr"],
+        },
       },
       {
         name: "xdr_decode",
@@ -47,17 +52,31 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           properties: {
             type: {
               type: "string",
-              description: "Type name"
+              description: "Type name",
             },
             xdr: {
               type: "string",
-              description: "Base64-encoded XDR of the transaction"
+              description: "Base64-encoded XDR of the transaction",
             },
           },
-          required: ["type", "xdr"]
-        }
-      }
-    ]
+          required: ["type", "xdr"],
+        },
+      },
+      {
+        name: "xdr_json_schema",
+        description: "Get the JSON schema for an XDR type.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            type: {
+              type: "string",
+              description: "Type name",
+            },
+          },
+          required: ["type"],
+        },
+      },
+    ],
   };
 });
 
@@ -71,12 +90,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       const list = guess(xdr);
 
-      return {
-        content: [{
-          type: "text",
-          text: `${list.join(", ")}`
-        }]
-      };
+      return { content: [{ type: "text", text: `${list.join(", ")}` }] };
     }
 
     case "xdr_decode": {
@@ -88,12 +102,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       const json = decode(type, xdr);
 
-      return {
-        content: [{
-          type: "text",
-          text: `${json}`
-        }]
-      };
+      return { content: [{ type: "text", text: `${json}` }] };
+    }
+
+    case "xdr_json_schema": {
+      const type = String(request.params.arguments?.type);
+      if (!type) {
+        throw new Error("XDR is required");
+      }
+
+      const json_schema = schema(type);
+
+      return { content: [{ type: "text", text: `${json_schema}` }] };
     }
 
     default:
