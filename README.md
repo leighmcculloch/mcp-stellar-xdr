@@ -1,9 +1,9 @@
 # Stellar MCP Server for XDR
 
-A [Claude Model Context Protocol (MCP)] server that decodes Stellar XDR into
+An [Model Context Protocol (MCP)] server that decodes Stellar XDR into
 XDR-JSON, that agents can use to understand what XDR means.
 
-[Claude Model Context Protocol (MCP)]: https://www.claudemcp.com/
+[Model Context Protocol (MCP)]: https://www.claudemcp.com/
 
 Provides five tools:
 
