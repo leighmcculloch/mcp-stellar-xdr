@@ -9,8 +9,10 @@ import {
 
 import init, {
   decode,
+  encode,
   guess,
   schema,
+  types,
 } from "npm:@stellar/stellar-xdr-json@23.0.0";
 await init();
 
@@ -29,6 +31,24 @@ const server = new Server(
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
+      {
+        name: "xdr_types",
+        description: "Get the supported XDR types.",
+      },
+      {
+        name: "xdr_json_schema",
+        description: "Get the JSON schema for an XDR type.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            type: {
+              type: "string",
+              description: "Type name",
+            },
+          },
+          required: ["type"],
+        },
+      },
       {
         name: "xdr_guess",
         description:
@@ -63,8 +83,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "xdr_json_schema",
-        description: "Get the JSON schema for an XDR type.",
+        name: "xdr_encode",
+        description: "Encode a Stellar XDR from JSON",
         inputSchema: {
           type: "object",
           properties: {
@@ -72,8 +92,13 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               type: "string",
               description: "Type name",
             },
+            json: {
+              type: "string",
+              description:
+                "JSON for the transaction adhereing to the JSON Schema",
+            },
           },
-          required: ["type"],
+          required: ["type", "json"],
         },
       },
     ],
@@ -82,6 +107,23 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   switch (request.params.name) {
+    case "xdr_types": {
+      const list = types();
+
+      return { content: [{ type: "text", text: `${list.join(", ")}` }] };
+    }
+
+    case "xdr_json_schema": {
+      const type = String(request.params.arguments?.type);
+      if (!type) {
+        throw new Error("Type is required");
+      }
+
+      const json_schema = schema(type);
+
+      return { content: [{ type: "text", text: `${json_schema}` }] };
+    }
+
     case "xdr_guess": {
       const xdr = String(request.params.arguments?.xdr);
       if (!xdr) {
@@ -94,10 +136,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     case "xdr_decode": {
-      const xdr = String(request.params.arguments?.xdr);
       const type = String(request.params.arguments?.type);
-      if (!xdr || !type) {
-        throw new Error("XDR is required");
+      const xdr = String(request.params.arguments?.xdr);
+      if (!type || !xdr) {
+        throw new Error("Type and XDR is required");
       }
 
       const json = decode(type, xdr);
@@ -105,15 +147,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text", text: `${json}` }] };
     }
 
-    case "xdr_json_schema": {
+    case "xdr_encode": {
       const type = String(request.params.arguments?.type);
-      if (!type) {
-        throw new Error("XDR is required");
+      const json = String(request.params.arguments?.json);
+      if (!type || !json) {
+        throw new Error("Type and JSON is required");
       }
 
-      const json_schema = schema(type);
+      const xdr = encode(type, json);
 
-      return { content: [{ type: "text", text: `${json_schema}` }] };
+      return { content: [{ type: "text", text: `${xdr}` }] };
     }
 
     default:
