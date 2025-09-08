@@ -5,6 +5,14 @@ XDR-JSON, that agents can use to understand what XDR means.
 
 [Claude Model Context Protocol (MCP)]: https://www.claudemcp.com/
 
+Provides five tools:
+
+- `mcp_stellar-xdr_types` - Get the supported XDR types.
+- `mcp_stellar-xdr_json_schema` - Get the JSON schema for an XDR type.
+- `mcp_stellar-xdr_guess` - Guess what type Stellar XDR is, getting back a list of possible types.
+- `mcp_stellar-xdr_decode` - Decode a Stellar XDR to JSON.
+- `mcp_stellar-xdr_encode` - Encode a Stellar XDR from JSON.
+
 ## Usage (General)
 
 To use with agents, setup a `stdio` MCP configuration with your agent calling
